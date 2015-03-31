@@ -91,7 +91,7 @@ void AEFighter::Tick( float DeltaTime ) {
 
 void AEFighter::ReceiveHit(class UPrimitiveComponent* MyComp, class AActor* Other, class UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit) {
 	Super::ReceiveHit(MyComp, Other, OtherComp, bSelfMoved, HitLocation, HitNormal, NormalImpulse, Hit);
-	this->TakeDamage(CurrentHealth + 1, FDamageEvent(), Other->GetInstigatorController(), Other);
+	this->Destroy();
 }
 
 float AEFighter::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) {

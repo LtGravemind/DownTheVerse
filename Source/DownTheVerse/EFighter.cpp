@@ -61,14 +61,14 @@ void AEFighter::Tick( float DeltaTime ) {
 		GetActorBounds(false, Origin, BoxExtents);
 		FVector Avoid = GetActorLocation() + GetActorRotation().Vector() * CurrentForwardSpeed * SightMultiplier;
 		GetWorld()->SweepSingle(hit, this->GetActorLocation(), Avoid, FQuat::Identity, FCollisionShape::MakeBox(BoxExtents), TraceParams, FCollisionObjectQueryParams());
-		if (hit.GetActor() != CurrentTarget) {
+		if (hit.GetActor() && hit.GetActor() != CurrentTarget) {
 			FVector AvoidanceForce = hit.Location - hit.GetActor()->GetActorLocation();
 			FQuat TargetDirection((AvoidanceForce + this->GetActorLocation()).Rotation());
 			FQuat CurrentDirection(GetActorRotation());
 			FQuat NewDirection = FQuat::Slerp(CurrentDirection, TargetDirection, .01f);
 			SetActorRotation((NewDirection).Rotator());
 		}
-		if (hit.GetActor() == CurrentTarget) {
+		if (hit.GetActor() && hit.GetActor() == CurrentTarget) {
 			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::SanitizeFloat(Time));
 			if (Time > TimePerShot) {
 				Time = 0.f;

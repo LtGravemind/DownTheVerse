@@ -38,15 +38,7 @@ private:
 	/** Current forward speed */
 	float CurrentForwardSpeed;
 
-	/** Current yaw speed */
-	float CurrentYawSpeed;
-
-	/** Current pitch speed */
-	float CurrentPitchSpeed;
-
-	/** Current roll speed */
-	float CurrentRollSpeed;
-
 public:
 	void SetCurrentTarget(AActor* NewTarget) { CurrentTarget = NewTarget; }
+	void SetCurrentSpeed(float NewSpeed) { CurrentForwardSpeed = NewSpeed; }
 };

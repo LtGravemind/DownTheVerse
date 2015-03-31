@@ -22,6 +22,8 @@ AEFighter::AEFighter(const FObjectInitializer& ObjectInitializer)
 	SightMultiplier = 3.f;
 	Time = 0.f;
 	TimePerShot = 5.f;
+	MaxHealth = 100.f;
+	CurrentHealth = 100.f;
 }
 
 // Called when the game starts or when spawned
@@ -59,16 +61,13 @@ void AEFighter::Tick( float DeltaTime ) {
 		GetActorBounds(false, Origin, BoxExtents);
 		FVector Avoid = GetActorLocation() + GetActorRotation().Vector() * CurrentForwardSpeed * SightMultiplier;
 		GetWorld()->SweepSingle(hit, this->GetActorLocation(), Avoid, FQuat::Identity, FCollisionShape::MakeBox(BoxExtents), TraceParams, FCollisionObjectQueryParams());
-		if (hit.GetActor() && hit.GetActor() != CurrentTarget) {
+		if (hit.GetActor() != CurrentTarget) {
 			FVector AvoidanceForce = hit.Location - hit.GetActor()->GetActorLocation();
 			FQuat TargetDirection((AvoidanceForce + this->GetActorLocation()).Rotation());
 			FQuat CurrentDirection(GetActorRotation());
 			FQuat NewDirection = FQuat::Slerp(CurrentDirection, TargetDirection, .01f);
 			SetActorRotation((NewDirection).Rotator());
 		}
-		hit = FHitResult(ForceInit);
-		FVector Attack = GetActorLocation() + GetActorRotation().Vector() * CurrentForwardSpeed * SightMultiplier * 2;
-		GetWorld()->SweepSingle(hit, this->GetActorLocation(), Attack, FQuat::Identity, FCollisionShape::MakeBox(BoxExtents), TraceParams, FCollisionObjectQueryParams());
 		if (hit.GetActor() == CurrentTarget) {
 			GEngine->AddOnScreenDebugMessage(-1, 3.f, FColor::Red, FString::SanitizeFloat(Time));
 			if (Time > TimePerShot) {
@@ -92,6 +91,19 @@ void AEFighter::Tick( float DeltaTime ) {
 
 void AEFighter::ReceiveHit(class UPrimitiveComponent* MyComp, class AActor* Other, class UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit) {
 	Super::ReceiveHit(MyComp, Other, OtherComp, bSelfMoved, HitLocation, HitNormal, NormalImpulse, Hit);
+	this->TakeDamage(CurrentHealth + 1, FDamageEvent(), Other->GetInstigatorController(), Other);
+}
+
+float AEFighter::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) {
+	CurrentHealth -= DamageAmount;
+	if (CurrentHealth <= 0.f) {
+		CurrentHealth = 0.f;
+		SetLifeSpan(0.001f);
+	}
+	if (CurrentHealth > MaxHealth) {
+		CurrentHealth = MaxHealth;
+	}
+	return 0.f;
 }
 
 void AEFighter::Destroyed() {

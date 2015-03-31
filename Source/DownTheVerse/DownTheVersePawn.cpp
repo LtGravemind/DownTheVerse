@@ -83,7 +83,7 @@ void ADownTheVersePawn::ReceiveHit(class UPrimitiveComponent* MyComp, class AAct
 
 float ADownTheVersePawn::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser) {
 	CurrentHealth -= DamageAmount;
-	if (CurrentHealth < 0.f) {
+	if (CurrentHealth <= 0.f) {
 		CurrentHealth = 0.f;
 		SetLifeSpan(0.001f);
 	}
@@ -155,7 +155,7 @@ void ADownTheVersePawn::FireLaserPointer() {
 		if (GEngine) {
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, hit.GetActor()->GetName());
 		}
-		hit.GetActor()->Destroy();
+		hit.GetActor()->TakeDamage(10.f, FDamageEvent(), this->GetInstigatorController(), this);
 	}
 }
 

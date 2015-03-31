@@ -25,6 +25,9 @@ public:
 	// Recieved hit
 	virtual void ReceiveHit(class UPrimitiveComponent* MyComp, class AActor* Other, class UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit) override;
 
+	// Take Damage
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser);
+
 	// Destroyed
 	virtual void Destroyed();
 
@@ -76,6 +79,12 @@ private:
 	//Time in between shots
 	UPROPERTY(Category = Weapon, EditAnywhere)
 	float TimePerShot;
+
+	UPROPERTY(Category = Health, EditAnywhere)
+		float CurrentHealth;
+
+	UPROPERTY(Category = Health, EditAnywhere)
+		float MaxHealth;
 	
 public:
 	/** Whether the Fighter is currently targeted */

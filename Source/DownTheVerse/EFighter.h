@@ -12,6 +12,10 @@ class DOWNTHEVERSE_API AEFighter : public APawn
 	UPROPERTY(Category = Mesh, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UBoxComponent* DroneSight;
 
+	void RotateTowards(FVector RotationDirection);
+
+	FVector FlockInfluence(FVector RotationDirection);
+
 public:
 	// Sets default values for this pawn's properties
 	AEFighter(const FObjectInitializer& ObjectInitializer);

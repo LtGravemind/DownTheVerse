@@ -24,6 +24,7 @@ AEFighter::AEFighter(const FObjectInitializer& ObjectInitializer)
 	TimePerShot = 5.f;
 	MaxHealth = 25.f;
 	CurrentHealth = 25.f;
+	AvoidDamage = FVector::ZeroVector;
 }
 
 // Called when the game starts or when spawned
@@ -80,10 +81,14 @@ void AEFighter::Tick( float DeltaTime ) {
 	}
 	else if (hit.GetActor() && hit.GetActor() != CurrentTarget && Cast<AEFighter>(hit.GetActor()) == nullptr) {
 		FVector AvoidanceForce = hit.Location - hit.GetActor()->GetActorLocation();
+		AvoidanceForce += AvoidDamage;
+		AvoidDamage = FVector::ZeroVector;
 		this->RotateTowards(AvoidanceForce + this->GetActorLocation());
 	}
 	else {
 		FVector Direction = this->FlockInfluence(CurrentTarget->GetActorLocation() - this->GetActorLocation());
+		Direction += AvoidDamage;
+		AvoidDamage = FVector::ZeroVector;
 		this->RotateTowards(Direction);
 	}
 	Super::Tick( DeltaTime );
@@ -106,7 +111,7 @@ FVector AEFighter::FlockInfluence(FVector RotationDirection) {
 								 FCollisionShape::MakeSphere(800.f),
 								 SphereParams,
 								 FCollisionObjectQueryParams())) {
-		DrawDebugSphere(GetWorld(), GetActorLocation(), 800.f, 32, FColor::Red);
+		//DrawDebugSphere(GetWorld(), GetActorLocation(), 800.f, 32, FColor::Red);
 		int32 NumberOfFighters = 1;
 		for (int32 Idx = 0; Idx < Overlaps.Num(); ++Idx) {
 			FOverlapResult const& Overlap = Overlaps[Idx];
@@ -118,12 +123,12 @@ FVector AEFighter::FlockInfluence(FVector RotationDirection) {
 				float DistanceNormal = DistanceBase.Size();
 
 				if (DistanceNormal < 800.f) {
-					Alignment += Mine->GetActorRotation().Vector(); //If within 20u, add and average directions of other agents
+					Alignment += Mine->GetActorRotation().Vector();
 				}
 				if (DistanceNormal < 640.f) {
-					Cohesion += Mine->GetActorLocation(); //If within 15u, attempt to steer toward center of mass in neighborhood
+					Cohesion += Mine->GetActorLocation();
 				}
-				if (DistanceNormal < 512.f) { // If within 10u, attempt to most away from other agents.
+				if (DistanceNormal < 512.f) {
 					Seperation += DistanceBase / (DistanceNormal * DistanceNormal);
 				}
 			}
@@ -137,7 +142,7 @@ FVector AEFighter::FlockInfluence(FVector RotationDirection) {
 		Cohesion.Normalize();
 		Seperation.Normalize();
 		RotationDirection.Normalize();
-		return (90.f*RotationDirection + 2.5f*Alignment + 2.5f*Cohesion + 5.f*Seperation);
+		return (90.f*RotationDirection + 2.5f*Alignment + 2.5f*Cohesion + 2.5f*Seperation);
 	}
 	else {
 		return RotationDirection;
@@ -158,6 +163,7 @@ float AEFighter::TakeDamage(float DamageAmount, struct FDamageEvent const& Damag
 	if (CurrentHealth > MaxHealth) {
 		CurrentHealth = MaxHealth;
 	}
+	AvoidDamage = GetActorRotation().Vector() * -1 * 10000;
 	return 0.f;
 }
 

@@ -89,6 +89,8 @@ private:
 
 	UPROPERTY(Category = Health, EditAnywhere)
 		float MaxHealth;
+
+	FVector AvoidDamage;
 	
 public:
 	/** Whether the Fighter is currently targeted */

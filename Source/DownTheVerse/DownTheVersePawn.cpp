@@ -101,7 +101,6 @@ void ADownTheVersePawn::SetupPlayerInputComponent(class UInputComponent* InputCo
 	InputComponent->BindAxis("Thrust", this, &ADownTheVersePawn::ThrustInput);
 	InputComponent->BindAxis("MoveUp", this, &ADownTheVersePawn::MoveUpInput);
 	InputComponent->BindAxis("MoveRight", this, &ADownTheVersePawn::MoveRightInput);
-	InputComponent->BindAction("FireLaserPointer", IE_Pressed, this, &ADownTheVersePawn::FireLaserPointer);
 	InputComponent->BindAction("MoreMissile", IE_Pressed, this, &ADownTheVersePawn::MoreMissile);
 	InputComponent->BindAction("NextTarget", IE_Pressed, this, &ADownTheVersePawn::IncrementTarget);
 	InputComponent->BindAction("PreviousTarget", IE_Pressed, this, &ADownTheVersePawn::DecrementTarget);
@@ -139,24 +138,6 @@ void ADownTheVersePawn::MoveRightInput(float Val)
 
 	// Smoothly interpolate to target yaw speed
 	CurrentRollSpeed = FMath::FInterpTo(CurrentRollSpeed, TargetRollSpeed, GetWorld()->GetDeltaSeconds(), 2.f);
-}
-
-void ADownTheVersePawn::FireLaserPointer() {
-	FVector EndTrace = RootComponent->RelativeLocation + RootComponent->RelativeRotation.Vector() * 10000;
-
-	FCollisionQueryParams TraceParams(true);
-	TraceParams.bTraceAsyncScene = true;
-	TraceParams.bReturnPhysicalMaterial = true;
-
-	FHitResult hit(ForceInit);
-	GetWorld()->LineTraceSingle(hit, RootComponent->RelativeLocation, EndTrace, TraceParams, FCollisionObjectQueryParams());
-	DrawDebugLine(GetWorld(), RootComponent->RelativeLocation, EndTrace, FColor(255, 0, 0), false, 1, 0, 12.333);
-	if (hit.GetActor()) {
-		if (GEngine) {
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, hit.GetActor()->GetName());
-		}
-		hit.GetActor()->TakeDamage(10.f, FDamageEvent(), this->GetInstigatorController(), this);
-	}
 }
 
 void ADownTheVersePawn::MoreMissile() {

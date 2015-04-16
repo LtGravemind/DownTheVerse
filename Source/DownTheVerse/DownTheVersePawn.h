@@ -44,9 +44,6 @@ protected:
 	void MoveRightInput(float Val);
 
 	// Fire the Laser Pointer!
-	void FireLaserPointer();
-
-	// Fire the Laser Pointer!
 	void MoreMissile();
 
 	void IncrementTarget();

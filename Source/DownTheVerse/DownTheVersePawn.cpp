@@ -49,7 +49,7 @@ ADownTheVersePawn::ADownTheVersePawn(const FObjectInitializer& ObjectInitializer
 	MinSpeed = 500.f;
 	CurrentForwardSpeed = 500.f;
 	MaxHealth = 100.f;
-	CurrentHealth = 100.f;
+	CurrentHealth = MaxHealth;
 }
 
 void ADownTheVersePawn::Tick(float DeltaSeconds) {

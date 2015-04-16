@@ -48,10 +48,6 @@ protected:
 	void DecrementTarget();
 private:
 
-	/** How quickly forward speed changes */
-	UPROPERTY(Category=Plane, EditAnywhere)
-	float Acceleration;
-
 	/** How quickly pawn can steer */
 	UPROPERTY(Category=Plane, EditAnywhere)
 	float PitchSpeed;
@@ -59,19 +55,8 @@ private:
 	UPROPERTY(Category = Plane, EditAnywhere)
 	float RollSpeed;
 
-	/** Max forward speed */
-	UPROPERTY(Category = Pitch, EditAnywhere)
-	float MaxSpeed;
-
-	/** Min forward speed */
-	UPROPERTY(Category=Yaw, EditAnywhere)
-	float MinSpeed;
-
 	UPROPERTY(Category = Health, EditAnywhere)
 	float CurrentHealth;
-
-	UPROPERTY(Category = Health, EditAnywhere)
-	float MaxHealth;
 
 	/** Default SpringArm Rotation*/
 	FRotator DefaultArmRotation;
@@ -94,4 +79,19 @@ public:
 	FORCEINLINE class USpringArmComponent* GetSpringArm() const { return SpringArm; }
 	/** Returns Camera subobject **/
 	FORCEINLINE class UCameraComponent* GetCamera() const { return Camera; }
+
+	/** Max forward speed */
+	UPROPERTY(Category = Pitch, EditAnywhere, BlueprintReadWrite)
+		float MaxSpeed;
+
+	/** Min forward speed */
+	UPROPERTY(Category = Yaw, EditAnywhere, BlueprintReadWrite)
+		float MinSpeed;
+
+	UPROPERTY(Category = Health, EditAnywhere, BlueprintReadWrite)
+		float MaxHealth;
+
+	/** How quickly forward speed changes */
+	UPROPERTY(Category = Plane, EditAnywhere, BlueprintReadWrite)
+		float Acceleration;
 };

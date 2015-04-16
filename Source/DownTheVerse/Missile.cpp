@@ -60,3 +60,7 @@ void AMissile::ReceiveHit(class UPrimitiveComponent* MyComp, class AActor* Other
 	}
 	this->Destroy();
 }
+
+void AMissile::SetCurrentTarget(AActor* NewTarget) { CurrentTarget = NewTarget; }
+
+void AMissile::SetCurrentSpeed(float NewSpeed) { CurrentForwardSpeed = NewSpeed; }

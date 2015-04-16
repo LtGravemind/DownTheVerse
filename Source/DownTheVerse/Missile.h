@@ -39,6 +39,8 @@ private:
 	float CurrentForwardSpeed;
 
 public:
-	void SetCurrentTarget(AActor* NewTarget) { CurrentTarget = NewTarget; }
-	void SetCurrentSpeed(float NewSpeed) { CurrentForwardSpeed = NewSpeed; }
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void SetCurrentTarget(AActor* NewTarget);
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void SetCurrentSpeed(float NewSpeed);
 };

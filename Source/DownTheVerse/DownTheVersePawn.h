@@ -43,9 +43,6 @@ protected:
 	/** Bound to the horizontal axis */
 	void MoveRightInput(float Val);
 
-	// Fire the Laser Pointer!
-	void MoreMissile();
-
 	void IncrementTarget();
 
 	void DecrementTarget();

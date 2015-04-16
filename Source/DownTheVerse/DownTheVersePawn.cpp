@@ -101,7 +101,6 @@ void ADownTheVersePawn::SetupPlayerInputComponent(class UInputComponent* InputCo
 	InputComponent->BindAxis("Thrust", this, &ADownTheVersePawn::ThrustInput);
 	InputComponent->BindAxis("MoveUp", this, &ADownTheVersePawn::MoveUpInput);
 	InputComponent->BindAxis("MoveRight", this, &ADownTheVersePawn::MoveRightInput);
-	InputComponent->BindAction("MoreMissile", IE_Pressed, this, &ADownTheVersePawn::MoreMissile);
 	InputComponent->BindAction("NextTarget", IE_Pressed, this, &ADownTheVersePawn::IncrementTarget);
 	InputComponent->BindAction("PreviousTarget", IE_Pressed, this, &ADownTheVersePawn::DecrementTarget);
 }
@@ -138,16 +137,6 @@ void ADownTheVersePawn::MoveRightInput(float Val)
 
 	// Smoothly interpolate to target yaw speed
 	CurrentRollSpeed = FMath::FInterpTo(CurrentRollSpeed, TargetRollSpeed, GetWorld()->GetDeltaSeconds(), 2.f);
-}
-
-void ADownTheVersePawn::MoreMissile() {
-	FVector EndTrace = GetActorLocation() + GetActorRotation().Vector() * 500;
-	AMissile* missile = GetWorld()->SpawnActor<AMissile>(AMissile::StaticClass(), EndTrace, GetActorRotation());
-	missile->SetLifeSpan(10.f);
-	ACombatHUD* HUD = Cast<ACombatHUD>(GetWorld()->GetFirstPlayerController()->GetHUD());
-	if (HUD->CurrentTarget != NULL) {
-		missile->SetCurrentTarget(HUD->CurrentTarget);
-	}
 }
 
 void ADownTheVersePawn::IncrementTarget() {

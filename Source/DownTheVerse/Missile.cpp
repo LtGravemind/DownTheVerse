@@ -27,6 +27,7 @@ AMissile::AMissile() {
 
 	TurnSpeed = 50.f;
 	CurrentForwardSpeed = 500.f;
+	MissileDamage = 25.f;
 	CurrentTarget = NULL;
 }
 
@@ -56,7 +57,7 @@ void AMissile::Tick( float DeltaTime ) {
 void AMissile::ReceiveHit(class UPrimitiveComponent* MyComp, class AActor* Other, class UPrimitiveComponent* OtherComp, bool bSelfMoved, FVector HitLocation, FVector HitNormal, FVector NormalImpulse, const FHitResult& Hit) {
 	Super::ReceiveHit(MyComp, Other, OtherComp, bSelfMoved, HitLocation, HitNormal, NormalImpulse, Hit);
 	if (Other) {
-		Other->TakeDamage(25.f, FDamageEvent(), this->GetInstigatorController(), this);
+		Other->TakeDamage(MissileDamage, FDamageEvent(), this->GetInstigatorController(), this);
 	}
 	this->Destroy();
 }
@@ -64,3 +65,4 @@ void AMissile::ReceiveHit(class UPrimitiveComponent* MyComp, class AActor* Other
 void AMissile::SetCurrentTarget(AActor* NewTarget) { CurrentTarget = NewTarget; }
 
 void AMissile::SetCurrentSpeed(float NewSpeed) { CurrentForwardSpeed = NewSpeed; }
+void AMissile::SetCurrentDamage(float NewDamage) { MissileDamage = NewDamage; }

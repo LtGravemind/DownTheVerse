@@ -38,9 +38,13 @@ private:
 	/** Current forward speed */
 	float CurrentForwardSpeed;
 
+	float MissileDamage;
+
 public:
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void SetCurrentTarget(AActor* NewTarget);
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void SetCurrentSpeed(float NewSpeed);
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void SetCurrentDamage(float NewDamage);
 };

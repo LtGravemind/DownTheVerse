@@ -12,6 +12,6 @@ struct FXPTable : public FTableRowBase
 	GENERATED_USTRUCT_BODY()
 
 	/** Full Path of Blueprint */
-	UPROPERTY(BlueprintReadOnly, Category = "XPTable")
+	UPROPERTY(BlueprintReadWrite, Category = "XPTable", EditAnywhere)
 	int32 RequiredXP;
 };

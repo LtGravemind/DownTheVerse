@@ -55,9 +55,6 @@ private:
 	UPROPERTY(Category = Plane, EditAnywhere)
 	float RollSpeed;
 
-	UPROPERTY(Category = Health, EditAnywhere)
-	float CurrentHealth;
-
 	/** Default SpringArm Rotation*/
 	FRotator DefaultArmRotation;
 
@@ -90,6 +87,9 @@ public:
 
 	UPROPERTY(Category = Health, EditAnywhere, BlueprintReadWrite)
 		float MaxHealth;
+
+	UPROPERTY(Category = Health, EditAnywhere, BlueprintReadWrite)
+		float CurrentHealth;
 
 	/** How quickly forward speed changes */
 	UPROPERTY(Category = Plane, EditAnywhere, BlueprintReadWrite)

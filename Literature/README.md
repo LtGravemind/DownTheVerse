@@ -95,9 +95,9 @@ are the only realistic options for players to defeat enemies.
 
 The original intent for this game was to be playable with a controller. Right
 now, controls using a controller are very limited and anywhere near as easy
-as using a mouse. Controls are also currently hardcoded in and cannot be
-customized. If we continue this project very far, that has to go and we're not
-afraid to say it.
+as using a mouse where they exist. Controls are also currently hardcoded in and
+cannot be customized. If we continue this project very far, that has to go and
+we're not afraid to say it.
 
 We hope to have more art to serve the game's needs. It will not solve all
 gameplay issues. It will solve some confusion about 3D navigation, however.

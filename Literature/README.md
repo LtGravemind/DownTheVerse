@@ -12,9 +12,13 @@ graphics, the game loop, multi-platform support, and input, one of us had
 trouble getting it to run on a PC as originally planned, delaying initial
 development.
 
+![This function no docstring](sodoweusethisor.jpg?raw=true)
+
 Documentation provided for UE4 was iffy for new features we were interested
 in using, and often incomplete for C++ portions compared to Blueprint (visual
 coding) counterparts. This meant we did not use as much C++ as we were hoping.
+
+![This code draws the reticle in the middle of the screen.](spaghetti.jpg?raw=true)
 
 Blueprints were good for rapid iteration. Many UE4 features are immediately
 accessible and can be added by typing what you think you need. However, the
@@ -73,7 +77,8 @@ levels, a more informative HUD, and better-tuned controls.
 
 We would also like to add more meaningful customization by visually
 distinguishing choices. Adding different types of missions and varying the
-rewards might make the game more interesting.
+rewards might make the game more interesting. It should inspire a better sense
+of player accomplishment.
 
 We could re-tune the combat to more closely match our original vision. Right
 now, landing very difficult shots, ramming ships, or abusing missile tracking

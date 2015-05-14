@@ -18,6 +18,11 @@ Documentation provided for UE4 was iffy for new features we were interested
 in using, and often incomplete for C++ portions compared to Blueprint (visual
 coding) counterparts. This meant we did not use as much C++ as we were hoping.
 
+There were cases we ran into where if we wanted something to work a certain
+way, we'd either have to implement a fix ourselves (a lot of effort for little
+gain) or wait for a substantial version update (too far away). Compromises were
+made.
+
 ![This code draws the reticle in the middle of the screen.](spaghetti.jpg?raw=true)
 
 Blueprints were good for rapid iteration. Many UE4 features are immediately
@@ -37,6 +42,8 @@ make or get, and ended up having a very sparse look to the game due to minimal
 assets. Due to time constraints, some minutes of music and sound were planned
 but not implemented.
 
+![In a perfect world, we'd know what these orbs mean just by looking.](missionselect.jpg?raw=true)
+
 Many of our intended designed features could not be or just were not
 implemented. In part, we had to learn the engine from scratch, and in part, we
 had to manage time as students. In an open-ended project, it is easy to push
@@ -44,6 +51,8 @@ it off in favor of a technically challenging project for another class with
 more concrete expectations. It could be argued some elements were out of scope
 for two students, but the true villains here are the usual: time, motivation,
 and skill.
+
+![We wanted more options to mess with than what you see here.](shipshape.jpg?raw=true)
 
 The game we created matches many of our intended features in a checklist sense.
 It is less so in that we wanted it to be easy to pick up and enjoy. We did

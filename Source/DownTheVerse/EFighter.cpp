@@ -61,13 +61,13 @@ void AEFighter::Tick( float DeltaTime ) {
 	FVector Origin, BoxExtents;
 	GetActorBounds(false, Origin, BoxExtents);
 	FVector Avoid = GetActorLocation() + GetActorRotation().Vector() * CurrentForwardSpeed * SightMultiplier;
-	GetWorld()->SweepSingle(hit,
+	GetWorld()->SweepSingleByObjectType(hit,
 							this->GetActorLocation(),
 							Avoid,
 							FQuat::Identity,
+							FCollisionObjectQueryParams(),
 							FCollisionShape::MakeBox(BoxExtents),
-							TraceParams,
-							FCollisionObjectQueryParams());
+							TraceParams);
 
 	if (hit.GetActor() && hit.GetActor() == CurrentTarget) {
 		if (Time > TimePerShot) {
@@ -75,7 +75,7 @@ void AEFighter::Tick( float DeltaTime ) {
 			FVector EndTrace = GetActorLocation() + GetActorRotation().Vector() * 10000;
 
 			hit = FHitResult(ForceInit);
-			GetWorld()->LineTraceSingle(hit, GetActorLocation(), EndTrace, TraceParams, FCollisionObjectQueryParams());
+			GetWorld()->LineTraceSingleByObjectType(hit, GetActorLocation(), EndTrace, FCollisionObjectQueryParams(), TraceParams);
 			DrawDebugLine(GetWorld(), GetActorLocation(), EndTrace, FColor::Red, false, 1, 0, 12.333);
 		}
 	}
@@ -105,12 +105,12 @@ FVector AEFighter::FlockInfluence(FVector RotationDirection) {
 	FVector Alignment, Cohesion, Seperation;
 	FCollisionQueryParams SphereParams(FName(TEXT("Boid")), false, this);
 	TArray<FOverlapResult> Overlaps;
-	if (GetWorld()->OverlapMulti(Overlaps,
+	if (GetWorld()->OverlapMultiByObjectType(Overlaps,
 								 GetActorLocation(),
 								 FQuat::Identity,
+								 FCollisionObjectQueryParams(),
 								 FCollisionShape::MakeSphere(800.f),
-								 SphereParams,
-								 FCollisionObjectQueryParams())) {
+								 SphereParams)) {
 		//DrawDebugSphere(GetWorld(), GetActorLocation(), 800.f, 32, FColor::Red);
 		int32 NumberOfFighters = 1;
 		for (int32 Idx = 0; Idx < Overlaps.Num(); ++Idx) {
